@@ -32,7 +32,7 @@ module.exports.bookControllers = {
   showBookById: async (req, res) => {
     const { id } = req.params;
     try {
-      const book = Book.findById(id).populate("author genre", "name");
+      const book = await Book.findById(id).populate("author genre", "name");
       res.json(book);
     } catch (err) {
       res.json(err);
@@ -40,7 +40,7 @@ module.exports.bookControllers = {
   },
   showBooks: async (req, res) => {
     try {
-      const books = Book.find().populate("author genre", "name");
+      const books = await Book.find().populate("author genre", "name");
       res.json(books);
     } catch (err) {
       res.json(err.message);
@@ -49,7 +49,10 @@ module.exports.bookControllers = {
   showBooksByGenre: async (req, res) => {
     const { id } = req.params;
     try {
-      const books = Book.find({ genre: id }).populate("author genre", "name");
+      const books = await Book.find({ genre: id }).populate(
+        "author genre",
+        "name"
+      );
       res.json(books);
     } catch (err) {
       res.json(err.message);
